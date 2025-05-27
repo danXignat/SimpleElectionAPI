@@ -16,5 +16,8 @@ namespace Core.Interfaces {
         Task<List<Vote>> GetAllVotesAsync();
         Task<Vote> GetVoteByIdAsync(int id);
         Task<List<Vote>> GetVotesByCandidateIdAsync(int candidateId);
+
+        Task<Candidate> UpdateCandidateAsync(Candidate candidate);
+        Task<bool> CheckForDuplicateCandidateAsync(int excludeId, string name, string party, string position, string electionYear);
     }
 }

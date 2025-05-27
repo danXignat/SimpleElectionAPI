@@ -1,7 +1,8 @@
+using API.Middlewares;
 using Core.Interfaces;
 using Core.Services;
-using Database.Repositories;
 using Database;
+using Database.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -28,6 +29,7 @@ if (app.Environment.IsDevelopment()) {
     app.UseSwaggerUI();
 }
 
+app.UseMiddleware<ErrorHandlingMiddleware>();
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
