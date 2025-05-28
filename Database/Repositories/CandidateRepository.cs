@@ -59,5 +59,22 @@ namespace Database.Repositories {
                 .Where(v => v.CandidateId == candidateId)
                 .ToListAsync();
         }
+
+        public async Task<Candidate> UpdateCandidateAsync(Candidate candidate)
+        {
+            _context.Candidates.Update(candidate);
+            await _context.SaveChangesAsync();
+            return await GetCandidateWithVotesAsync(candidate.Id);
+        }
+
+        public async Task<bool> CheckForDuplicateCandidateAsync(int excludeId, string name, string party, string position, string electionYear)
+        {
+            return await _context.Candidates
+                .AnyAsync(c => c.Id != excludeId &&
+                              c.Name.ToLower() == name.ToLower() &&
+                              c.Party.ToLower() == party.ToLower() &&
+                              c.Position.ToLower() == position.ToLower() &&
+                              c.ElectionYear == electionYear);
+        }
     }
 }
